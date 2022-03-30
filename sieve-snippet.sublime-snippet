@@ -1,0 +1,37 @@
+<snippet>
+	<content><![CDATA[
+const int N = 1000001;
+vector<int> prime(N,1);
+vector<int> hp(N,0),lp(N,0);
+
+void sieve(){
+    prime[1]=0;
+    for(int i=2;i<=N;i++){
+        if(!prime[i]) continue;
+        lp[i] = hp[i] = i;
+        for(int j = 2*i; j<=N; j += i ){
+            prime[j] = 0;
+            hp[j] = i;
+            if(lp[j] == 0)
+                lp[j] = i;
+        }
+    }
+}
+
+vector<int> prime_fact(int num){
+    vector<int> ans;
+    while(num > 1){
+        int prime_factor = lp[num];
+        while(num%prime_factor == 0){
+            num = num/prime_factor;
+            ans.push_back(prime_factor);
+        }
+    }
+    return ans;
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>sieve</tabTrigger> 
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope> 
+</snippet>
